@@ -1,4 +1,11 @@
-from django.conf.global_settings import INSTALLED_APPS, AUTH_USER_MODEL
+from django.conf.global_settings import INSTALLED_APPS, AUTH_USER_MODEL, LANGUAGE_CODE, SECRET_KEY, DEBUG, \
+    ALLOWED_HOSTS, MIDDLEWARE, TEMPLATES, WSGI_APPLICATION, AUTH_PASSWORD_VALIDATORS, LOCALE_PATHS, TIME_ZONE, USE_I18N, \
+    USE_L10N, USE_TZ, STATIC_URL, MEDIA_URL, MEDIA_ROOT, DEFAULT_AUTO_FIELD
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = 'what-secret-key'
+DEBUG = True
+ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
@@ -18,9 +25,65 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.users',
-    'apps.practice',
+    'apps.users', #User management app
+    'apps.practice', #Driving theory app
 ]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Locale middleware for translations
+
+]
+
+ROOT_URLCONF = 'start_auto_theorie.urls'
+
+TEMPLATES = [
+    {}
+]
+
+WSGI_APPLICATION = 'start_auto_theorie.wsgi.application'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+LANGUAGE_CODE = 'nl'
+
+LOCALE_PATHS = [
+    BASE_DIR/'locale'
+]
+
+TIME_ZONE = 'Europe/Amsterdam'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+STATIC_URL = '/static'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
