@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Sessie Samenvatting{% endblock %}
+{% block content %}
+<h2>Jouw Sessies</h2>
+<ul>
+    {% for session in sessions %}
+        <li>
+            Gestart op: {{ session.started_at }}
+            {% if session.completed_at %}
+                | Beëindigd op: {{ session.completed_at }}
+            {% else %}
+                | Nog bezig
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,14 @@
+from django.contrib import admin
+from .models import Question, UserAnswer, PracticeSession
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['question_text', 'date_take']
+
+@admin.register(UserAnswer)
+class UserAnswerAdmin(admin.ModelAdmin):
+    list_display = ['question', 'answer_given', 'is_correct']
+
+@admin.register(PracticeSession)
+class PracticeSessionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'started_at', 'completed_at', 'score']
