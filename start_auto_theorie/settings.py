@@ -1,6 +1,10 @@
-from django.conf.global_settings import INSTALLED_APPS, AUTH_USER_MODEL, LANGUAGE_CODE, SECRET_KEY, DEBUG, \
-    ALLOWED_HOSTS, MIDDLEWARE, TEMPLATES, WSGI_APPLICATION, AUTH_PASSWORD_VALIDATORS, LOCALE_PATHS, TIME_ZONE, USE_I18N, \
-    USE_L10N, USE_TZ, STATIC_URL, MEDIA_URL, MEDIA_ROOT, DEFAULT_AUTO_FIELD
+from pathlib import Path
+from django.conf.global_settings import (
+    INSTALLED_APPS, AUTH_USER_MODEL, LANGUAGE_CODE, SECRET_KEY, DEBUG,
+    ALLOWED_HOSTS, MIDDLEWARE, TEMPLATES, WSGI_APPLICATION, AUTH_PASSWORD_VALIDATORS,
+    LOCALE_PATHS, TIME_ZONE, USE_I18N, USE_L10N, USE_TZ, STATIC_URL, MEDIA_URL,
+    MEDIA_ROOT, DEFAULT_AUTO_FIELD
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'what-secret-key'
@@ -44,8 +48,20 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'start_auto_theorie.urls'
 
 TEMPLATES = [
-    {}
-]
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
 
 WSGI_APPLICATION = 'start_auto_theorie.wsgi.application'
 
@@ -87,3 +103,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login/' # Adjust this URL if your login page is different
