@@ -1,16 +1,18 @@
 <h1>Resultaten</h1>
-<p>Je hebt {{ score }} van de {{ results|length }} vragen goed beantwoord.</p>
+<p>Je hebt {{ correct_answers }} van de {{ total_questions }} vragen goed beantwoord. Je score is {{ score_percentage }}%.</p>
 
-{% for result in results %}
-    <p>Vraag: {{ result.question }}</p>
-    <p>Jouw antwoord: {{ result.userAnswer }}</p>
-    <p>Correct antwoord: {{ result.correctAnswer }}</p>
-    <p>Uitleg: {{ result.explanation }}</p>
-    {% if result.isCorrect %}
+{% for answer in user_answers %}
+    <p><strong>Vraag:</strong> {{ answer.question.question }}</p>
+    <p><strong>Jouw antwoord:</strong> {{ answer.answer_given }}</p>
+    <p><strong>Correct antwoord:</strong> {{ answer.question.answer }}</p>
+    <p><strong>Uitleg:</strong> {{ answer.question.explanation }}</p>
+    {% if answer.is_correct %}
         <p style="color:green">Correct</p>
     {% else %}
         <p style="color:red">Incorrect</p>
     {% endif %}
     <br>
 {% endfor %}
-<a href="/practice">Opnieuw proberen</a>
+
+<a href="/practice">Opnieuw proberen</a> |
+<a href="/">Terug naar home</a>

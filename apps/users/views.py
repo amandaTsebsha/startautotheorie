@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 
 class CustomLoginView(LoginView):
-    template_name = 'users/login.html'  #Double check Directory
+    template_name = 'users/templates/login.html'  #Double check Directory
 
     def get_success_url(self):
         return self.request.GET.get('next', '/')

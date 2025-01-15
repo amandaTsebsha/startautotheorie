@@ -23,7 +23,7 @@ def practice_home(request):
                     answer_given=value,
                     is_correct=is_correct,
                 )
-        return redirect('results')
+        return redirect('practice: session_summary')
 
 
     # ... (rest of the view logic)
@@ -34,7 +34,7 @@ def question_details(request,pk):
 
     if request.method == "POST":
         selected_answer = request.POST.get('answer')
-        is_correct = question.correct_answer.filter(answer_text = selected_answer, is_correct=True).exists()
+        is_correct = selected_answer == question.correct_answer
         return render(request, 'practice/question_details.html',
                       {'question': question,
                        'is_correct': is_correct,

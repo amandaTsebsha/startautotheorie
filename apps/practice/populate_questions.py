@@ -1,5 +1,6 @@
 from .models import Question
 
+
 def populate_questions():
     questions_data = [
         {
