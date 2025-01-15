@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -18,7 +19,7 @@ class UserAnswer(models.Model):
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Answer to {self.question.id}: {self.answer_given}"
+        return f"Answer to {self.question.id}: {self.answer_given} - {self.is_correct}"
 
 class PracticeSession(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='practice_session')

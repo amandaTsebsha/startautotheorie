@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Vraag{% endblock %}
+
+{% block content %}
+<h2>{{ question.question_text }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for answer in question.answers.all %}
+        <input type="radio" name="answer" value="{{ answer.answer_text }}" id="answer_{{ forloop.counter }}">
+        <label for="answer_{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+    {% endfor %}
+    <button type="submit">Indienen</button>
+</form>
+
+{% if is_correct is not None %}
+    <p>{{ selected_answer }} is {% if is_correct %}juist{% else %}onjuist{% endif %}.</p>
+{% endif %}
+{% endblock %}

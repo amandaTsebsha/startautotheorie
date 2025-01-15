@@ -1,17 +1,3 @@
-<form method="post">
-    {% csrf_token %}
-    {% for question in questions %}
-        <p>{{ forloop.counter }}. {{ question.question }}</p>
-        {% for option in question.options %}
-            <input type="radio" name="answers" value="{{ option }}"> {{ option }}<br>
-        {% endfor %}
-    {% endfor %}
-    <button type="submit">Submit</button>
-</form>
-"""
-
-# results.html
-"""
 <h1>Resultaten</h1>
 <p>Je hebt {{ score }} van de {{ results|length }} vragen goed beantwoord.</p>
 

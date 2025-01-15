@@ -1,17 +1,12 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="nl">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--</body>-->
-<!--</html>-->
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+
+{% block title %}Practice{% endblock %}
+
 {% block content %}
-<h2>Welcome to Start Auto Theorie</h2>
-<p>Prepare for your driving theory exam with interactive practice
-tests and progress tracking.</p>
+<h2>Oefenvragen</h2>
+<ul>
+    {% for question in questions %}
+        <li><a href="{% url 'practice:question_detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock %}
