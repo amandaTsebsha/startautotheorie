@@ -5,16 +5,16 @@ from django.contrib import messages
 from django.utils import timezone
 
 def index(request):
-    return render(request, 'users/index.html')
+    return render(request, 'practice/index.html')
 
 def bestel(request):
-    return render(request, 'users/bestel.html')
+    return render(request, 'bestel.html')
 
 def faq(request):
-    return render(request, 'users/faq.html')
+    return render(request, 'faq.html')
 
 def contact(request):
-    return render(request, 'users/contact.html')
+    return render(request, 'contact.html')
 
 @login_required
 def practice_home(request):
