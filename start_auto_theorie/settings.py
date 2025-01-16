@@ -58,7 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'start_auto_theorie.wsgi.application'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'my_users.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
