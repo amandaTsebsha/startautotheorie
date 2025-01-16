@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+{% load static %}
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
@@ -18,14 +20,14 @@
         <li><a href="{% url 'bestel' %}">Bestellen</a></li>
         <li><a href="{% url 'faq' %}">FAQ</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
-        <li><a href="/practice/">Practice</a></li>
-        <li><a href="/login/">Login</a></li>
+        <li><a href="{% url 'practice:practice' %}">Practice</a></li>
+        <li><a href="{% url 'users:login' %}">Login</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <!-- Content block for child templates -->
+    <!-- Content block for child users -->
     {% block content %}
     {% endblock %}
   </main>

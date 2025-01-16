@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Sessie Samenvatting{% endblock %}
+{% block content %}
+    <h2>Jouw Sessies</h2>
+    {% if session %}
+        <p>Session Started at: {{ session.started_at }}</p>
+        <p>Score: {{ session.score }}</p>
+        <p>Percentage: {{ score_percentage }}%</p>
+        {% if user_answers %}
+            <h3>Answers:</h3>
+            <ul>
+                {% for answer in user_answers %}
+                    <li>
+                        <strong>Question:</strong> {{ answer.question.question_text }}<br>
+                        <strong>Your Answer:</strong> {{ answer.answer_given }}<br>
+                        <strong>Correct Answer:</strong> {{ answer.question.correct_answer }}<br>
+                        {% if answer.is_correct %}
+                            <span style="color:green;">Correct</span>
+                        {% else %}
+                            <span style="color:red;">Incorrect</span>
+                        {% endif %}
+                        <hr>
+                    </li>
+                {% endfor %}
+            </ul>
+         {% else %}
+            <p>No answers recorded for this session.</p>
+         {% endif %}
+    {% else %}
+        <p>No session data available.</p>
+    {% endif %}
+    <a href="{% url 'practice:practice' %}">Practice Again</a>
+{% endblock %}

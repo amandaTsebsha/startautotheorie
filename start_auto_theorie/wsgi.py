@@ -11,7 +11,7 @@ application = get_wsgi_application()
 #
 # home.html
 #
-# practice.html
+# users.html
 #
 # results.html
 #

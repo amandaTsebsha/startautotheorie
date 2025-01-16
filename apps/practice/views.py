@@ -1,74 +1,75 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from apps.practice.models import Question, UserAnswer, PracticeSession
-
+from .models import Question, UserAnswer, PracticeSession
+from django.contrib import messages
+from django.utils import timezone
 
 def index(request):
-    return render(request, 'templates/index.html')
+    return render(request, 'users/index.html')
 
 def bestel(request):
-    return render(request, 'templates/bestel.html')
+    return render(request, 'users/bestel.html')
 
 def faq(request):
-    return render(request, 'templates/faq.html')
+    return render(request, 'users/faq.html')
 
 def contact(request):
-    return render(request, 'templates/contact.html')
-
+    return render(request, 'users/contact.html')
 
 @login_required
 def practice_home(request):
-
-    if request.method == "GET":
-        questions = Question.objects.all()
-        return render(request, 'practice/home.html', {'questions': questions})
-
     if request.method == "POST":
-        # Handle the submitted answers
         answers = request.POST
-        for key, value in answers.items():
-            if key.startswith("question_"):
-                question_id = key.split("_")[1]
-                question = Question.objects.get(id=question_id)
-                is_correct = value == question.correct_answer
-                UserAnswer.objects.create(
-                    user=request.user,
-                    question=question,
-                    answer_given=value,
-                    is_correct=is_correct,
-                )
-        return redirect('practice: session_summary')
+        practice_session = PracticeSession.objects.create(user=request.user)
+        correct_count = 0
 
+        for question_id, answer in answers.items():
+            if question_id.startswith("question_"):
+                try:
+                    question_id = int(question_id.split("_")[1]) #convert to int
+                    question = Question.objects.get(pk=question_id)
+                    is_correct = answer == question.correct_answer
+                    UserAnswer.objects.create(practice_session=practice_session, question=question, answer_given=answer, is_correct=is_correct)
+                    if is_correct:
+                        correct_count += 1
+                except (Question.DoesNotExist, ValueError): #handle errors
+                     messages.error(request, "Invalid question data submitted.")
+                     practice_session.delete()
+                     return redirect('users:users') # Redirect to prevent incomplete session
 
-    # ... (rest of the view logic)
+        practice_session.score = correct_count
+        practice_session.completed_at = timezone.now()
+        practice_session.save()
+        messages.success(request, "Answers submitted!")
+        return redirect('users:session_summary')
+
+    questions = Question.objects.all()
+    return render(request, 'users/home.html', {'questions': questions})
 
 @login_required
-def question_details(request,pk):
+def question_details(request, pk):
     question = get_object_or_404(Question, pk=pk)
-
     if request.method == "POST":
         selected_answer = request.POST.get('answer')
         is_correct = selected_answer == question.correct_answer
-        return render(request, 'practice/question_details.html',
-                      {'question': question,
-                       'is_correct': is_correct,
-                       'selected_answer': selected_answer})
+        return render(request, 'users/question_details.html', {'question': question, 'is_correct': is_correct, 'selected_answer': selected_answer})
+    return render(request, 'users/question_details.html', {'question': question}) # Consistent template name
 
-    return render(request, 'practice/question_detail.html', {'question': question})
-
+@login_required
 def session_summary(request):
-    user_answers = UserAnswer.objects.filter(user=request.user)
-    total_questions = user_answers.count()
-    correct_answers = user_answers.filter(is_correct=True).count()
-    score_percentage = (correct_answers / total_questions * 100) if total_questions > 0 else 0
-
-    return render(request, "results.html", {
-        "user_answers": user_answers,
-        "total_questions": total_questions,
-        "correct_answers": correct_answers,
-        "score_percentage": score_percentage,
-    })
-
-    user_sessions = PracticeSession.objects.filter(user=request.user)
-    return render(request, 'practice/session_summary.html', {'sessions': user_sessions})
-    # ... (logic to process user answers and calculate score)
+    try:
+        latest_session = PracticeSession.objects.filter(user=request.user).latest('started_at')
+        user_answers = UserAnswer.objects.filter(practice_session=latest_session)
+        total_questions = user_answers.count()
+        correct_answers = user_answers.filter(is_correct=True).count()
+        score_percentage = (correct_answers / total_questions * 100) if total_questions > 0 else 0
+        return render(request, "users/results.html", {
+            "user_answers": user_answers,
+            "total_questions": total_questions,
+            "correct_answers": correct_answers,
+            "score_percentage": score_percentage,
+            "session": latest_session
+        })
+    except PracticeSession.DoesNotExist:
+        messages.info(request, "You haven't completed any users sessions yet.") #inform user
+        return redirect('users:users')

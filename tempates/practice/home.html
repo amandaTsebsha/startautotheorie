@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Practice{% endblock %}
+
+{% block content %}
+    <h2>Oefenvragen</h2>
+    {% if questions %}
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question-container">
+                    <h3>{{ forloop.counter }}. {{ question.question_text }}</h3>
+                    {% if question.image_url %}
+                        <img src="{{ question.image_url }}" alt="Question Image" width="200">
+                    {% endif %}
+                    <div class="options">
+                    {% for option in question.options %}
+                        <label>
+                            <input type="radio" name="question_{{ question.id }}" value="{{ option }}" required> {{ option }}
+                        </label><br>
+                    {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+            <button type="submit">Submit Answers</button>
+        </form>
+    {% else %}
+        <p>No questions available at the moment.</p>
+    {% endif %}
+{% endblock %}

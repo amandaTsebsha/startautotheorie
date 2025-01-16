@@ -93,9 +93,15 @@ def populate_questions():
     ]
 
     for question_data in questions_data:
-        Question.objects.create(
-            question=question_data['question'],
-            options=question_data['options'],
-            answer=question_data['answer'],
-            explanation=question_data['explanation']
+        question, created = Question.objects.get_or_create(  # get or create to prevent duplicates
+            question_text=question_data['question'],
+            defaults={
+                'options': question_data['options'],
+                'correct_answer': question_data['answer'],
+                'difficulty': question_data.get('difficulty', 1),  # Default difficulty 1
+            }
         )
+        if created:
+            print(f"Created question: {question.question_text}")
+        else:
+            print(f"Question already exists: {question.question_text}")

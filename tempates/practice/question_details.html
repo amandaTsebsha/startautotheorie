@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Vraag{% endblock %}
+
+{% block content %}
+    <h2>{{ question.question_text }}</h2>
+    {% if question.image_url %}
+        <img src="{{ question.image_url }}" alt="Question Image" width="200">
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="options">
+            <label>
+                <input type="radio" name="answer" value="{{ question.correct_answer }}" id="correct_answer" required>
+                {{ question.correct_answer }}
+            </label><br>
+            {% for option in question.options %}
+                {% if option != question.correct_answer %}
+                    <label>
+                        <input type="radio" name="answer" value="{{ option }}" id="answer_{{ forloop.counter }}" required>
+                        {{ option }}
+                    </label><br>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <button type="submit">Indienen</button>
+    </form>
+
+    {% if is_correct is not None %}
+        <p>{{ selected_answer }} is {% if is_correct %}juist{% else %}onjuist{% endif %}.</p>
+    {% endif %}
+{% endblock %}
