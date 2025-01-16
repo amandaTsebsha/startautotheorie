@@ -6,4 +6,4 @@ from apps.users.models import CustomUser
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['username', 'email', 'is_student', 'is_instructor']
     search_fields = ['username', 'email']
-    list_filter = ['is_student','is_instructor']
+    list_filter = ['role', 'is_student','is_instructor']

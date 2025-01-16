@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.users',
+    'apps.practice',
     'apps.users',
 ]
 
@@ -59,7 +59,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'start_auto_theorie.wsgi.application'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'my_users.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
