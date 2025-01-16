@@ -13,12 +13,9 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'startautotheorie',         # Replace with your PostgreSQL database name
-        'USER': 'postgres',         # Replace with your PostgreSQL username
-        'PASSWORD': 'I AM NOT SURE ABOUT MY PW', # Replace with your PostgreSQL password
-        'HOST': 'localhost',                  # Or the IP address of your database server
-        'PORT': '5432',                       # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'startautotheorie.sqlite',
+
     }
 }
 
@@ -96,7 +93,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static'
+STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
@@ -105,5 +102,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/' # Adjust this URL if your login page is different
+
+STATICFILES_DIR = [BASE_DIR / 'static']
 
 STATICFILES_DIRS = [BASE_DIR/'static']

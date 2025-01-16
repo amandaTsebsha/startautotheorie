@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, UserAnswer, PracticeSession
+from apps.practice.models import Question, UserAnswer, PracticeSession
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):

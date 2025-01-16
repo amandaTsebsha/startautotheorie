@@ -1,6 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Question, UserAnswer, PracticeSession
+from apps.practice.models import Question, UserAnswer, PracticeSession
+
+
+def index(request):
+    return render(request, 'templates/index.html')
+
+def bestel(request):
+    return render(request, 'templates/bestel.html')
+
+def faq(request):
+    return render(request, 'templates/faq.html')
+
+def contact(request):
+    return render(request, 'templates/contact.html')
+
 
 @login_required
 def practice_home(request):
