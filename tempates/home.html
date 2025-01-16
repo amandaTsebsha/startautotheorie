@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>Welkom bij StartAutoTheorie</h1>
+  <p>Bereid je voor op je rijexamen met onze bewezen leermethoden.</p>
+  <a href="{% url 'bestel' %}" class="button primary">Start Nu</a>
+</div>
+{% endblock %}

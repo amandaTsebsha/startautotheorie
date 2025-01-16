@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}StartAutoTheorie{% endblock %}</title>
+  <!-- Linking the consolidated stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/boilerplate.css' %}">
 </head>
-<body>
 
+<body>
+  <header>
+    <h1>StartAutoTheorie</h1>
+    <nav>
+      <ul>
+        <!-- Combined navigation structure -->
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'bestel' %}">Bestellen</a></li>
+        <li><a href="{% url 'faq' %}">FAQ</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        <li><a href="/practice/">Practice</a></li>
+        <li><a href="/login/">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Content block for child templates -->
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <!-- Footer text and copyright -->
+    <p>&copy; 2024-2025 StartAutoTheorie. Alle rechten voorbehouden.</p>
+  </footer>
+
+  <!-- JavaScript for interactivity -->
+  <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>
