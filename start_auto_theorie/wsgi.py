@@ -9,7 +9,7 @@ application = get_wsgi_application()
 #
 # base.html
 #
-# home.html
+# index.html
 #
 # users.html
 #

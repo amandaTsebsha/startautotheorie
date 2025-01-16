@@ -44,7 +44,7 @@ def practice_home(request):
         return redirect('users:session_summary')
 
     questions = Question.objects.all()
-    return render(request, 'users/home.html', {'questions': questions})
+    return render(request, 'practice/index.html', {'questions': questions})
 
 @login_required
 def question_details(request, pk):
