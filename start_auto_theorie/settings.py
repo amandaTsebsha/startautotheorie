@@ -22,10 +22,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
     'apps.practice',
     'apps.users',
     'whitenoise.runserver_nostatic',  # Optional: Makes WhiteNoise work with runserver
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
